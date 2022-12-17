@@ -78,6 +78,16 @@ def oversmoke() -> None:
     print("Who doesn't love burnt meats?")
 
 
+async def upper_case(input_text):
+    print("Converting to upper case ...")
+    return input_text.upper()
+
+
+async def title_case(input_text):
+    print("Converting to title case ...")
+    return input_text.title()
+
+
 # Views
 
 async def index(request):
@@ -94,6 +104,12 @@ async def smoke_some_meats(request):
     results = await asyncio.gather(*[get_smokables(), get_flavor()])
     total = await asyncio.gather(*[smoke(results[0], results[1])])
     return HttpResponse(f"Smoked {total[0]} meats with {results[1]}!")
+
+
+async def format_text(request):
+    input_text = "this is sample text"
+    results = await asyncio.gather(*[upper_case(input_text), title_case(input_text)])
+    return HttpResponse(f'Ouput = "{results[0]}" and "{results[1]}"')
 
 
 async def burn_some_meats(request):
